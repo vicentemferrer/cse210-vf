@@ -25,19 +25,19 @@ public class ReadJournalActivity : Activity
     Console.Clear();
     Console.WriteLine("Journal entries:");
     _journal.DisplayAll();
-    Console.Write("Press enter to continue ");
+    Console.Write("\nPress enter to continue ");
     _actInput.Ask();
   }
 
   private void DisplaySelected()
   {
     Console.Clear();
-    Console.Write("Enter entry date to search (MM-DD-YYYY): ");
+    Console.Write("Enter entry date to search (MM-DD-YYYY / DD-MM-YYYY): ");
     _actInput.Ask();
 
     Console.WriteLine("\nJournal entries selected:");
     _journal.DisplayMatched(DateTime.Parse(_actInput.GetInputText()).ToShortDateString());
-    Console.Write("Press enter to continue ");
+    Console.Write("\nPress enter to continue ");
     _actInput.Ask();
 
     Console.WriteLine();

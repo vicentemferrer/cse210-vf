@@ -19,18 +19,12 @@ public class ScriptureProgress
     };
   }
 
-  public ScriptureProgress(int[] versesRead)
+  public void DisplayProgress()
   {
-    _volumes = new string[5] { "Old Testament", "New Testament", "Book of Mormon", "Doctrine and Covenants", "Pearl of Great Price" };
-    _verses = new int[5] { 27591, 7958, 6577, 3627, 635 };
-    _versesRead = versesRead;
-    _books = new string[][] {
-      new string[] { "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel", "1 Kings", "2 Kings", "1 Chronicles", "2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "Solomon's Song", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah", "Haggai", "Zechariah", "Malachi" },
-      new string[] { "Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Corinthians", "2 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians", "1 Timothy", "2 Timothy", "Titus", "Philemon", "Hebrews", "James", "1 Peter", "2 Peter", "1 John", "2 John", "3 John", "Jude", "Revelation" },
-      new string[] { "1 Nephi", "2 Nephi", "Jacob", "Enos", "Jarom", "Omni", "Words of Mormon", "Mosiah", "Alma", "Helaman", "3 Nephi", "4 Nephi", "Mormon", "Ether", "Moroni" },
-      new string[] { "Doctrine and Covenants" },
-      new string[] { "Moses", "Abraham", "Joseph Smith--Matthew", "Joseph Smith--History", "Articles of Faith"}
-    };
+    for (int i = 0; i < _volumes.Length; i++)
+    {
+      Console.WriteLine($"\t{_volumes[i]}:\t\t{Math.Round(((decimal)_versesRead[i] / _verses[i]) * 100, 2)}%");
+    }
   }
 
   public void UpdateProgress(string bookName, int verseAmount)
@@ -53,13 +47,18 @@ public class ScriptureProgress
     return -1;
   }
 
+  public void LoadProgress(int[] versesRead)
+  {
+    _versesRead = versesRead;
+  }
+
   public string GetStringRepresentation()
   {
-    string representation = "Progress:";
+    string representation = "Progress;";
 
-    foreach (int amount in _versesRead)
+    for (int i = 0; i < _versesRead.Length; i++)
     {
-      representation += amount != _versesRead[_versesRead.Length - 1] ? $"{amount}," : $"{amount}";
+      representation += i != _versesRead.Length - 1 ? $"{_versesRead[i]}," : $"{_versesRead[i]}";
     }
 
     return representation;

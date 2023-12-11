@@ -3,6 +3,7 @@ public class Application
   private Journal _journal;
   private ScriptureProgress _progress;
   private ScriptureReference _currentReference;
+  private FileManager _fileManager;
   private UserInput _input;
   private List<string> _options;
 
@@ -11,11 +12,12 @@ public class Application
     _journal = new Journal();
     _progress = new ScriptureProgress();
     _currentReference = new ScriptureReference();
+    _fileManager = new FileManager();
     _input = new UserInput();
-    _options = new List<string> { "Read scriptures", "Read study journal", "Write journal", "Save journal", "Load journal", "Exit" };
+    _options = new List<string> { "Read scriptures", "Read study journal", "Write journal", "Show progress", "Update progress", "Save journal", "Load journal", "Exit" };
   }
 
-  public void Start()
+  public async Task Start()
   {
     do
     {
@@ -30,36 +32,49 @@ public class Application
       _input.Ask();
       Console.WriteLine();
 
-      DispatchActions(_input.GetInputValue());
-    } while (!_input.CompareInput("6"));
+      await DispatchActions(_input.GetInputValue());
+    } while (!_input.CompareInput("8"));
   }
 
-  private void DispatchActions(int action)
+  private async Task DispatchActions(int action)
   {
-    if (action != 6) Console.Clear();
+    if (action != 8) Console.Clear();
 
-    switch (action)
+    try
     {
-      case 1:
-        CreateReadScriptureActivity(_currentReference).Run();
-        break;
-      case 2:
-        CreateReadJournalActivity(_journal).Run();
-        break;
-      case 3:
-        CreateWriteJournalActivity(_journal, _currentReference).Run();
-        break;
-      case 4:
-        //SaveGoals();
-        break;
-      case 5:
-        //LoadGoals();
-        break;
-      case 6:
-        break;
-      default:
-        Console.WriteLine("Sorry, not valid option");
-        return;
+      switch (action)
+      {
+        case 1:
+          CreateReadScriptureActivity(_currentReference).Run();
+          break;
+        case 2:
+          CreateReadJournalActivity(_journal).Run();
+          break;
+        case 3:
+          CreateWriteJournalActivity(_journal, _currentReference).Run();
+          break;
+        case 4:
+          ShowProgress();
+          break;
+        case 5:
+          await UpdateProgress();
+          break;
+        case 6:
+          _fileManager.Save(_journal, _progress);
+          break;
+        case 7:
+          _fileManager.Load(_journal, _progress);
+          break;
+        case 8:
+          break;
+        default:
+          Console.WriteLine("Sorry, not valid option");
+          return;
+      }
+    }
+    catch (Exception e)
+    {
+      HandleError(e);
     }
   }
 
@@ -85,5 +100,27 @@ public class Application
     string description = "";
 
     return new WriteJournalActivity(name, description, journal, reference);
+  }
+
+  private async Task UpdateProgress()
+  {
+    ScriptureRequest request = new ScriptureRequest(_currentReference);
+    await request.DispatchRequest(_progress);
+  }
+
+  private void ShowProgress()
+  {
+    Console.WriteLine("Your Scripture reading progress:\n");
+    _progress.DisplayProgress();
+    Console.Write("\nPress enter to continue ");
+    _input.Ask();
+  }
+
+  private void HandleError(Exception error)
+  {
+    Console.WriteLine();
+    Console.WriteLine(error.Message);
+    Console.Write("\nPress enter to continue. ");
+    _input.Ask();
   }
 }

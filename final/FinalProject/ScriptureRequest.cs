@@ -57,5 +57,8 @@ public class ScriptureRequest
 
       verseAmount += 1;
     }
+
+    bookNames.Add(currentBookName);
+    verseAmounts.Add(verseAmount);
   }
 }

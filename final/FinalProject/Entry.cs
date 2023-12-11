@@ -2,28 +2,34 @@ public class Entry
 {
   public string _entryDate { get; private set; }
   private string _entryScripture;
-  private string _entryText;
+  private List<string> _entryContent;
 
-  public Entry(string date, string scripture, string entry)
+  public Entry(string date, string scripture, List<string> entry)
   {
     _entryDate = date;
     _entryScripture = scripture;
-    _entryText = entry;
+    _entryContent = entry;
   }
 
   public void BriefDisplay()
   {
-    Console.WriteLine($"Date: {_entryDate} - Scripture: {_entryScripture}");
+    Console.WriteLine($"\nDate: {_entryDate} - Scripture: {_entryScripture}");
   }
 
   public void Display()
   {
-    Console.WriteLine($"Date: {_entryDate} - Scripture: {_entryScripture}\n");
-    Console.WriteLine($"{_entryText}\n");
+    Console.WriteLine($"\nDate: {_entryDate} - Scripture: {_entryScripture}\n");
+
+    foreach (string line in _entryContent)
+    {
+      Console.WriteLine('\t' + line);
+    }
+
+    Console.WriteLine();
   }
 
   public string GetStringRepresentation()
   {
-    return $"Entry:{_entryDate},{_entryScripture},{_entryText}";
+    return $"Entry;{_entryDate},{_entryScripture},{string.Join('|', _entryContent)}";
   }
 }

@@ -35,7 +35,7 @@ public abstract class Activity
 
   protected void DisplayEndingMessage()
   {
-    Console.Write("Well done!! ");
+    Console.Write("\nWell done!! ");
     ShowSpinner(3);
     Console.Write($"\nReturning to menu ");
     ShowSpinner(3);

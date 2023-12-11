@@ -11,13 +11,13 @@ public class WriteJournalActivity : Activity
 
   public override void Run()
   {
-    string content;
+    List<string> content;
 
     DisplayStartingMessage();
     Console.Write("\nYou may begin in: ");
     ShowCountdown(5);
 
-    content = string.Join('\n', WriteEntry());
+    content = WriteEntry();
 
     _journal.AddEntry(new Entry(DateTime.Now.ToShortDateString(), _reference.GetStringRepresentation(), content));
 
