@@ -80,24 +80,24 @@ public class Application
 
   private ReadScriptureActivity CreateReadScriptureActivity(ScriptureReference reference)
   {
-    string name = "";
-    string description = "";
+    string name = "Read Scripture Activity";
+    string description = "This activity will help you grow by guiding you through reading and understanding a passage of the Sacred Scriptures. Explore the historical and literary context of the text, and learn how it reveals God's character and plan. This activity will help you connect with God and His Word.";
 
     return new ReadScriptureActivity(name, description, reference);
   }
 
   private ReadJournalActivity CreateReadJournalActivity(Journal journal)
   {
-    string name = "";
-    string description = "";
+    string name = "Read Journal Activity";
+    string description = "This activity will help you grow by leading you through reading and thinking on your past experiences. Learn from your reflections and God's love signs registered in your journal. This activity will help you connect with God, your Heavenly Father.";
 
     return new ReadJournalActivity(name, description, journal);
   }
 
   private WriteJournalActivity CreateWriteJournalActivity(Journal journal, ScriptureReference reference)
   {
-    string name = "";
-    string description = "";
+    string name = "Write Journal Activity";
+    string description = "This activity will help you express your thoughts and feelings about the Scriptures in a creative and personal way. It involves writing a poem, a story, a song, or any other form of writing that is inspired by a passage of Scriptures. Write your own reflections and insights on the text. This activity will help you explore the richness and relevance of God's Word for your life.";
 
     return new WriteJournalActivity(name, description, journal, reference);
   }

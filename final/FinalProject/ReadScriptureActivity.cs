@@ -11,7 +11,7 @@ public class ReadScriptureActivity : Activity
   {
     _reference = reference;
     _prompt = new PromptGenerator(
-      new List<string> { "What message is this passage trying to convey?", "How can I apply this message in my daily life?", "What can I learn from the biblical characters in this passage?", "How can I share this message with others?", "What can I do to improve my relationship with God?" }
+      new List<string> { "What message is this passage trying to convey?", "How can I apply this message in my daily life?", "What can I learn from the scripture characters in this passage?", "How can I share this message with others?", "What can I do to improve my relationship with God?" }
     );
     _alarm = new SoundPlayer("alarmSound.wav");
   }
