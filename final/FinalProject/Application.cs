@@ -32,40 +32,36 @@ public class Application
       _input.Ask();
       Console.WriteLine();
 
-      await DispatchActions(_input.GetInputValue());
+      await DispatchActions(_input.GetInputText());
     } while (!_input.CompareInput("8"));
   }
 
-  private async Task DispatchActions(int action)
+  private async Task DispatchActions(string actionInput)
   {
-    if (action != 8) Console.Clear();
+    if (actionInput != "8") Console.Clear();
 
     try
     {
-      switch (action)
+      switch (actionInput)
       {
-        case 1:
-          CreateReadScriptureActivity(_currentReference).Run();
+        case "1":
+        case "2":
+        case "3":
+          CreateActivity(actionInput).Run();
           break;
-        case 2:
-          CreateReadJournalActivity(_journal).Run();
-          break;
-        case 3:
-          CreateWriteJournalActivity(_journal, _currentReference).Run();
-          break;
-        case 4:
+        case "4":
           ShowProgress();
           break;
-        case 5:
+        case "5":
           await UpdateProgress();
           break;
-        case 6:
+        case "6":
           _fileManager.Save(_journal, _progress);
           break;
-        case 7:
+        case "7":
           _fileManager.Load(_journal, _progress);
           break;
-        case 8:
+        case "8":
           break;
         default:
           Console.WriteLine("Sorry, not valid option");
@@ -75,6 +71,21 @@ public class Application
     catch (Exception e)
     {
       HandleError(e);
+    }
+  }
+
+  private Activity CreateActivity(string action)
+  {
+    switch (action)
+    {
+      case "1":
+        return CreateReadScriptureActivity(_currentReference);
+      case "2":
+        return CreateReadJournalActivity(_journal);
+      case "3":
+        return CreateWriteJournalActivity(_journal, _currentReference);
+      default:
+        return null;
     }
   }
 
